@@ -22,9 +22,7 @@
 
 #### Tests
 
-- How do you run tests?
-- Any tests of note?
-- Describe any tests that you did not complete, skipped, etc
+- No tests yet, didn't understand exactly what the test requirement is.
 
 #### UML
 
