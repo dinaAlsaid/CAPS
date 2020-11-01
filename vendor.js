@@ -7,7 +7,7 @@ require('dotenv').config();
 const storeName = process.env.STORE;
 
 let payload = {};
-events.on('delivered',()=>{console.log('thank you');})
+events.on('delivered',()=>{console.log('thank you');});
 
 setInterval(() => {
   payload.storeName=storeName;

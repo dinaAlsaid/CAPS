@@ -7,7 +7,7 @@ events.on('pickup',(payload)=>pickupHandler(payload));
 function pickupHandler(payload){
   setTimeout(()=>{
     console.log(`DRIVER: picked up ${payload.orderId}`);
-    events.emit('in-transit',payload)
+    events.emit('in-transit',payload);
   },1000);
 
   setTimeout(()=>{
