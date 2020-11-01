@@ -1,0 +1,25 @@
+{
+  "name": "CAPS",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start":"node events.js",
+    "test": "jest --coverage --verbose",
+    "lint": "eslint '**/*.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dinaAlsaid/CAPS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dinaAlsaid/CAPS/issues"
+  },
+  "homepage": "https://github.com/dinaAlsaid/CAPS#readme",
+  "dependencies": {
+    "faker": "^5.1.0"
+  }
+}
