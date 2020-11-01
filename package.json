@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":"node events.js",
+    "start": "node index.js",
     "test": "jest --coverage --verbose",
     "lint": "eslint '**/*.js'"
   },
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/dinaAlsaid/CAPS#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "faker": "^5.1.0"
   }
 }
