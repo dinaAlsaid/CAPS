@@ -1,6 +1,6 @@
-# LAB - Class 16: Event Driven Applications
+# LAB - Class 17: TCP
 
-## Project: CAPS
+## Project: CAPS Phase2:tcp
 
 ### Author: Dina Alsaid
 
@@ -13,19 +13,19 @@
 #### `.env` requirements
 
 - `STORE` - blackMarket
+- `PORT` - 4000
+- `HOST` - localhost
 
 #### How to initialize/run your application
+
+navigate to folders caps, vendor and driver, then run nodemon in each. caps has the main server.
 
 - `npm start`
 
 #### How to use your library
 
-#### Tests
-
-- No tests yet, didn't understand exactly what the test requirement is.
-
 #### UML
 
-##### class 16
+no change on the UML
 
 ![class16 uml](./class16.png)
