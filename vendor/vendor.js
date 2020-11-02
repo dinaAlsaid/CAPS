@@ -1,6 +1,5 @@
 'use strict';
 require('dotenv').config();
-// const events = require('./events.js');
 const faker = require('faker');
 const net = require('net');
 const client = new net.Socket();
