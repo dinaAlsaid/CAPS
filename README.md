@@ -1,4 +1,4 @@
-# LAB - Class 16: Event Driven Applications
+# LAB - Class 17: TCP
 
 ## Project: CAPS
 
@@ -19,10 +19,6 @@
 - `npm start`
 
 #### How to use your library
-
-#### Tests
-
-- No tests yet, didn't understand exactly what the test requirement is.
 
 #### UML
 

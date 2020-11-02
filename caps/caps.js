@@ -1,27 +1,34 @@
 'use strict';
 require('dotenv').config();
 // const events = require('../events.js');
-const net = require('net');
 // const client = new net.Socket();
 // const HOST= process.env.HOST;
-const PORT = process.env.PORT;
+const net = require('net');
+const uuid = require('uuid').v4;
+const PORT = process.env.PORT || 4000;
 const server = net.createServer();
 let clientPool = {};
 
-server.listen(PORT,()=>{console.log(`listening on port ${PORT}`);});
+server.listen(PORT, () => {
+  console.log(`listening on port ${PORT}`);
+});
 
-
-server.on('connection',(socket)=>{
-  clientPool[id]=socket;
-})
-server.on('data',(messageString)=>{
-  const message = JSON.parse(messageString);
-  /*TODO*/
-  //     Read and parse the incoming data/payload
-  // Verify that the data is legitimate
-  // Is it a JSON object with both an event and payload properties?
-  // If the payload is ok, broadcast the raw data back out to each of the other connected clients
-})
+server.on('connection', (socket) => {
+  console.log('socket connected');
+  let id = `socket-${uuid()}`;
+  clientPool[id] = socket;
+  socket.on('error', (e) => console.log('SOCKET ERROR', e.message));
+  socket.on('end', (id) => delete clientPool[id]);
+  socket.on('data', (buffer) => {
+    var message = JSON.parse(buffer.toString());
+    console.log(message);
+    if (message['event'] && message['payload']) {
+      for (let socket in clientPool) {
+        clientPool[socket].write(buffer);
+      }
+    }
+  });
+});
 
 // events.on('in-transit', (payload) => {
 //   let EVENT = {
@@ -48,5 +55,5 @@ server.on('data',(messageString)=>{
 //   console.log(EVENT);
 // });
 
-require('./driver.js');
-require('./vendor.js');
+// require('./driver.js');
+// require('./vendor.js');

@@ -1,10 +1,10 @@
 {
-  "name": "caps",
+  "name": "vendor",
   "version": "1.0.0",
   "description": "",
-  "main": "caps.js",
+  "main": "vendor.js",
   "scripts": {
-    "start": "node caps.js",
+    "start": "node vendor.js",
     "test": "jest --coverage --verbose",
     "lint": "eslint '**/*.js'"
   },
@@ -12,7 +12,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^8.2.0",
-    "uuid": "^8.3.1"
+    "dotenv": "^8.2.0"
   }
 }
