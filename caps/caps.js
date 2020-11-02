@@ -1,8 +1,5 @@
 'use strict';
 require('dotenv').config();
-// const events = require('../events.js');
-// const client = new net.Socket();
-// const HOST= process.env.HOST;
 const net = require('net');
 const uuid = require('uuid').v4;
 const PORT = process.env.PORT || 4000;
@@ -30,30 +27,3 @@ server.on('connection', (socket) => {
   });
 });
 
-// events.on('in-transit', (payload) => {
-//   let EVENT = {
-//     event: 'in-transit',
-//     time: Date.now(),
-//     payload,
-//   };
-//   console.log(EVENT);
-// });
-// events.on('delivered', (payload) => {
-//   let EVENT = {
-//     event: 'delivered',
-//     time: Date.now(),
-//     payload,
-//   };
-//   console.log(EVENT);
-// });
-// events.on('pickup', (payload) => {
-//   let EVENT = {
-//     event: 'pickup',
-//     time: Date.now(),
-//     payload,
-//   };
-//   console.log(EVENT);
-// });
-
-// require('./driver.js');
-// require('./vendor.js');
