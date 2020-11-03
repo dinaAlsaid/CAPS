@@ -1,41 +1,28 @@
 'use strict';
 require('dotenv').config();
+const io = require('socket.io-client');
+const caps = io.connect('http://localhost:4000/caps');
+
 const faker = require('faker');
-const net = require('net');
-const client = new net.Socket();
 const storeName = process.env.STORE || 'blackmarket';
-const PORT = process.env.PORT || 4000;
-const HOST = process.env.HOST || 'localhost';
 
-// connect to caps server
-client.connect(PORT, HOST, () => {
-  let order = {};
+caps.on('connect', () => {
   setInterval(() => {
-    order.storeName = storeName;
-    order.orderId = faker.random.uuid();
-    order.customerName = faker.name.findName();
-    order.address = faker.address.city();
+    caps.emit('join', storeName);
 
-    let message = {
-      event: 'pickup',
-      payload: order,
+    let order = {
+      storeName: storeName,
+      orderId: faker.random.uuid(),
+      customerName: faker.name.findName(),
+      address: faker.address.city(),
     };
-    client.write(JSON.stringify(message));
+
+    caps.emit('pickup', order);
   }, 5000);
 
-  //on receiving data from server
-  client.on('data', (data) => {
-    let broadcastMessage = JSON.parse(data.toString());
-    let event = broadcastMessage['event'];
+  caps.on('delivered', (payload) => {
 
-    if (event === 'delivered') {
-      console.log(
-        `Thank you for delivering ${broadcastMessage['payload']['orderId']}`
-      );
-    }
+    console.log(`Thank you for delivering ${payload.orderId}`);
   });
-
-  client.on('close', () => console.log('Connection closed!'));
-  client.on('error', (err) => console.log('Logger Error', err.message));
-
 });
+

@@ -1,6 +1,6 @@
-# LAB - Class 17: TCP
+# LAB - Class 18: Socket.io
 
-## Project: CAPS Phase2:tcp
+## Project: CAPS Phase3:socket.Io
 
 ### Author: Dina Alsaid
 

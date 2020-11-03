@@ -1,29 +1,31 @@
 'use strict';
+//main server
 require('dotenv').config();
-const net = require('net');
-const uuid = require('uuid').v4;
-const PORT = process.env.PORT || 4000;
-const server = net.createServer();
-let clientPool = {};
-
-server.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`);
-});
-
-server.on('connection', (socket) => {
-  console.log('socket connected');
-  let id = `socket-${uuid()}`;
-  clientPool[id] = socket;
-  socket.on('error', (e) => console.log('SOCKET ERROR', e.message));
-  socket.on('end', (id) => delete clientPool[id]);
-  socket.on('data', (buffer) => {
-    var message = JSON.parse(buffer.toString());
-    console.log(message);
-    if (message['event'] && message['payload']) {
-      for (let socket in clientPool) {
-        clientPool[socket].write(buffer);
-      }
-    }
+const io = require('socket.io')(4000);
+// name space
+const caps = io.of('/caps');
+let currentRoom = '';
+caps.on('connection', (socket) => {
+  console.log(`socket is ${socket.id}`);
+  socket.on('join', (room) => {
+    socket.leave(currentRoom);
+    socket.join(room);
+    currentRoom=room;
+    console.log(room);
   });
-});
+  socket.on('pickup',(payload)=>{
+    console.log('pickup',payload);
+    caps.emit('pickup',payload);
+  })
+  socket.on('in-transit',(payload)=>{
+    console.log('in-transit',payload);
 
+    caps.to(currentRoom).emit('in-transit',payload)
+  })
+  socket.on('delivered',(payload)=>{
+    console.log('delivered',payload);
+
+    caps.to(currentRoom).emit('delivered',payload)
+
+  })
+});
