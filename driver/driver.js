@@ -1,34 +1,22 @@
 'use strict';
 
-const net = require('net');
-const client = new net.Socket();
-const HOST = process.env.HOST || 'localhost';
-const PORT = process.env.PORT || 4000;
+const io = require('socket.io-client');
+const caps = io.connect('http://localhost:4000/caps');
 
-client.connect(PORT, HOST, () => {
-  client.on('data', (buffer) => {
-    let broadcastMessage = JSON.parse(buffer.toString());
-    let event = broadcastMessage['event'];
-    if (event === 'pickup') {
-      let message = {
-        event: 'in-transit',
-        payload: broadcastMessage['payload'],
-      };
-      setTimeout(() => {
-        console.log(`Picking up ${broadcastMessage['payload']['orderId']}`);
-        client.write(JSON.stringify(message));
-      }, 1000);
 
-      setTimeout(() => {
-        message.event = 'delivered';
-        console.log(message.event);
+caps.on('connect',()=>{
+  caps.on('pickup',(payload)=>{
 
-        client.write(JSON.stringify(message));
-      }, 3000);
-    }
+    setTimeout(() => {
+      console.log(`Picking up ${payload.orderId}`);
+      caps.emit('in-transit',payload);
+    }, 1500);
+
+    setTimeout(() => {
+      console.log('delivered');
+      caps.emit('delivered',payload);
+    }, 3000);
+  
   });
-  client.on('close', () => console.log('Connection closed!'));
-  client.on('error', (err) => console.log('Logger Error', err.message));
 
-});
-
+})
